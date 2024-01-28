@@ -1,0 +1,35 @@
+[project]
+name = "pyzctrl"
+version = "0.1.0"
+authors = [
+  { name="Bruno Soares", email="soaresbruno@gmail.com" },
+]
+description = "Simple API to interact with select ZControl® devices."
+keywords = [
+  "zcontrol",
+  "zoeller",
+]
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "logging",
+  "requests",
+  "urllib.parse",
+  "xmltodict",
+]
+
+[project.urls]
+Homepage = "https://github.com/soaresbrun0/pyzctrl"
+Issues = "https://github.com/soaresbrun0/zcontrol/pyzctrl"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool]
