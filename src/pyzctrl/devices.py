@@ -1,4 +1,3 @@
-"""Support for fetching the status of ZControl® devices."""
 from __future__ import annotations
 
 import logging
@@ -7,11 +6,13 @@ import urllib.parse
 import xmltodict
 
 from enum import Enum
+from pyzctrl import exceptions
 
 DEFAULT_TIMEOUT = 10
 _LOGGER = logging.getLogger(__name__)
 
 class ZControlDevice:
+    """Support for fetching the status of ZControl® devices."""
 
     def __init__(
         self,
@@ -22,27 +23,28 @@ class ZControlDevice:
         self.timeout = timeout
         self._attrs: dict[str, str] | None = None
 
-    def _get_resource(self, resource: str) -> str:
+    def _fetch_resource(self, resource: str) -> str:
         try:
-            _LOGGER.debug("Fetching '%s'", resource)
             url = urllib.parse.urljoin(self.host, resource)
+            _LOGGER.debug("Fetching %s", url)
+
             response = requests.get(url, timeout = self.timeout)
             response.raise_for_status()
 
-            _LOGGER.debug("Successfully fetched '%s': %s", response.text)
+            _LOGGER.debug("Successfully fetched %s: %s", url, response.text)
             return response.text
 
-        except requests.exceptions.Timeout:
-            _LOGGER.error("Timed out while fetching '%s'", resource)
-            raise
+        except requests.exceptions.Timeout as ex:
+            _LOGGER.error("Timed out while fetching %s", url)
+            raise exceptions.ResourceFetchTimeoutError(self.host, resource) from ex
 
         except requests.exceptions.RequestException as ex:
-            _LOGGER.error("Failed to fetch resource %s", resource, ex)
-            raise
+            _LOGGER.error("Failed to fetch resource %s; %s", url, ex)
+            raise exceptions.ResourceFetchError(self.host, resource) from ex
 
     def update(self) -> None:
         """Fetch ZControl® device status."""
-        status = self._get_resource('status.xml')
+        status = self._fetch_resource('status.xml')
         self._attrs = xmltodict.parse(status).get('response')
 
     def _get_str_attr(self, key: str) -> str | None:
@@ -93,6 +95,7 @@ class ZControlDevice:
 
 
 class AquanotFit508(ZControlDevice):
+    """Support for fetching the status of Aquanot® Fit 508 devices."""
 
     @property
     def is_battery_charging(self) -> bool | None:
@@ -172,12 +175,12 @@ class AquanotFit508(ZControlDevice):
             return None
         return (action & 2) != 0
 
-    def perform_self_test(self): None
+    def perform_self_test(self) -> None:
         """Performs a self-test."""
-        self._get_resource('selftest.cgi')
+        self._fetch_resource('selftest.cgi')
 
-    """Alarms"""
     class Alarm(Enum):
+        """Enum containing known AquanotFit® 508 Alarms"""
 
         primary_power_missing = 1 << 0
         battery_missing = 1 << 1
@@ -195,6 +198,7 @@ class AquanotFit508(ZControlDevice):
         pump_no_current = 1 << 14
 
     def is_alarm_active(self, alarm: Alarm) -> bool | None:
+        """Whether or not the given alarm is active."""
         alarms = self._get_int_attr('alarms')
         if alarms == None:
             return None
@@ -202,13 +206,16 @@ class AquanotFit508(ZControlDevice):
 
     @property
     def has_active_alarms(self) -> bool | None:
+        """Whether or not the device has any active alarms."""
         alarms = self._get_int_attr('alarms')
         if alarms == None:
             return None
         return alarms != 0
 
-    def silence_alarms(): None
-        self._get_resource('silence.cgi')
+    def silence_alarms(self) -> None:
+        """Silences all alarms."""
+        self._fetch_resource('silence.cgi')
 
-    def acknowledge_faults(): None
-        self._get_resource('ackfaults.cgi')
+    def acknowledge_faults(self) -> None:
+        """Acknowledges all faults and resets the device."""
+        self._fetch_resource('ackfaults.cgi')
