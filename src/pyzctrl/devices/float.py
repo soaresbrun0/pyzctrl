@@ -1,7 +1,7 @@
 """Basic support for ZControl® devices equipped with floats."""
 
 from dataclasses import dataclass
-from enum import StrEnum, auto
+from enum import StrEnum
 
 from .basic import ZControlDevice
 
@@ -17,8 +17,8 @@ class ZControlFloatDevice(ZControlDevice):
         class Type(StrEnum):
             """Defines the type of the float."""
 
-            OPERATIONAL = auto()
-            HIGH_WATER = auto()
+            OPERATIONAL = "Operational"
+            HIGH_WATER = "High Water"
 
         type: Type | None = None
         """The float's type."""

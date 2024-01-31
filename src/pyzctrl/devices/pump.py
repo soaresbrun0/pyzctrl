@@ -1,7 +1,7 @@
 """Basic support for ZControl® devices equipped with pumps."""
 
 from dataclasses import dataclass
-from enum import StrEnum, auto
+from enum import StrEnum
 
 from .basic import ZControlDevice
 
@@ -17,7 +17,7 @@ class ZControlPumpDevice(ZControlDevice):
         class Type(StrEnum):
             """Defines pump types."""
         
-            DC = auto()
+            DC = "DC"
 
         type: Type | None = None
         """The pump's type."""
