@@ -37,32 +37,26 @@ class AquanotFit508(ZControlBatteryDevice, ZControlPumpDevice, ZControlFloatDevi
         self.floats = [
             self.Float(
                 type = self.Float.Type.OPERATIONAL,
-                state = self.Float.State.from_attributes(
-                    active = attrs.get_bool(self._Attribute.OPERATIONAL_FLOAT_IS_ACTIVE),
-                    malfunctioning = attrs.get_bool_from_bitmask(
-                        self._Attribute.ALARMS, self._Alarm.OPERATIONAL_FLOAT_MALFUNCTION
-                    ),
-                    missing = attrs.get_bool_from_bitmask(
-                        self._Attribute.ALARMS, self._Alarm.OPERATIONAL_FLOAT_MISSING
-                    ),
-                    never_present = attrs.get_bool(self._Attribute.OPERATIONAL_FLOAT_NEVER_PRESENT),
-                ),
+                is_active = attrs.get_bool(self._Attribute.OPERATIONAL_FLOAT_IS_ACTIVE),
                 activation_count = attrs.get_int(
                     self._Attribute.OPERATIONAL_FLOAT_ACTIVATION_COUNT
                 ),
+                is_malfunctioning = attrs.get_bool_from_bitmask(
+                    self._Attribute.ALARMS, self._Alarm.OPERATIONAL_FLOAT_MALFUNCTION
+                ),
+                is_missing = attrs.get_bool_from_bitmask(
+                    self._Attribute.ALARMS, self._Alarm.OPERATIONAL_FLOAT_MISSING
+                ),
+                never_present = attrs.get_bool(self._Attribute.OPERATIONAL_FLOAT_NEVER_PRESENT),
             ),
             self.Float(
                 type = self.Float.Type.HIGH_WATER,
-                state = self.Float.State.from_attributes(
-                    active = attrs.get_bool(self._Attribute.HIGH_WATER_FLOAT_IS_ACTIVE),
-                    missing = attrs.get_bool_from_bitmask(
-                        self._Attribute.ALARMS, self._Alarm.HIGH_WATER_FLOAT_MISSING
-                    ),
-                    never_present = attrs.get_bool(self._Attribute.HIGH_WATER_FLOAT_NEVER_PRESENT),
+                is_active = attrs.get_bool(self._Attribute.HIGH_WATER_FLOAT_IS_ACTIVE),
+                activation_count = attrs.get_int(self._Attribute.HIGH_WATER_FLOAT_ACTIVATION_COUNT),
+                is_missing = attrs.get_bool_from_bitmask(
+                    self._Attribute.ALARMS, self._Alarm.HIGH_WATER_FLOAT_MISSING
                 ),
-                activation_count = attrs.get_int(
-                    self._Attribute.HIGH_WATER_FLOAT_ACTIVATION_COUNT
-                ),
+                never_present = attrs.get_bool(self._Attribute.HIGH_WATER_FLOAT_NEVER_PRESENT),
             ),
         ]
 

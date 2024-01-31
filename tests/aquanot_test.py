@@ -35,13 +35,19 @@ class AquanotFit508Tests(unittest.TestCase):
         self.assertEqual(len(device.floats), 2)
         operational_float: ZControlFloatDevice.Float = device.floats[0]
         self.assertEqual(operational_float.type, ZControlFloatDevice.Float.Type.OPERATIONAL)
-        self.assertEqual(operational_float.state, ZControlFloatDevice.Float.State.INACTIVE)
+        self.assertEqual(operational_float.is_active, False)
         self.assertEqual(operational_float.activation_count, 2)
+        self.assertEqual(operational_float.is_malfunctioning, False)
+        self.assertEqual(operational_float.is_missing, False)
+        self.assertEqual(operational_float.never_present, False)
         
         high_water_float: ZControlFloatDevice.Float = device.floats[1]
         self.assertEqual(high_water_float.type, ZControlFloatDevice.Float.Type.HIGH_WATER)
-        self.assertEqual(high_water_float.state, ZControlFloatDevice.Float.State.INACTIVE)
-        self.assertEqual(high_water_float.activation_count, 2)
+        self.assertEqual(operational_float.is_active, False)
+        self.assertEqual(operational_float.activation_count, 2)
+        self.assertEqual(operational_float.is_malfunctioning, False)
+        self.assertEqual(operational_float.is_missing, False)
+        self.assertEqual(operational_float.never_present, False)
 
         self.assertEqual(len(device.batteries), 1)
         battery: ZControlBatteryDevice.Battery = device.batteries[0]
