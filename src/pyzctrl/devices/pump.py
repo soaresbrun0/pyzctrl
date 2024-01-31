@@ -31,7 +31,7 @@ class ZControlPumpDevice(ZControlDevice):
         runtime: float | None = None
         """The pump's total runtime, in seconds."""
 
-        is_airlock_detected: bool | None = None
+        airlock_detected: bool | None = None
         """Whether or not the pump has detected an airlock."""
 
     pumps: [Pump] = None

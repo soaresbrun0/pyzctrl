@@ -30,7 +30,7 @@ class AquanotFit508Tests(unittest.TestCase):
         self.assertEqual(pump.current, 0)
         self.assertEqual(pump.is_running, False)
         self.assertEqual(pump.runtime, 78.8)
-        self.assertEqual(pump.is_airlock_detected, False)
+        self.assertEqual(pump.airlock_detected, False)
 
         self.assertEqual(len(device.floats), 2)
         operational_float: ZControlFloatDevice.Float = device.floats[0]

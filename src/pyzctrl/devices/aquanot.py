@@ -29,7 +29,7 @@ class AquanotFit508(ZControlBatteryDevice, ZControlPumpDevice, ZControlFloatDevi
                 current = attrs.get_float(self._Attribute.DC_PUMP_CURRENT, 0.1),
                 runtime = attrs.get_float(self._Attribute.DC_PUMP_RUNTIME, 0.1),
                 is_running = attrs.get_bool(self._Attribute.DC_PUMP_IS_RUNNING),
-                is_airlock_detected = attrs.get_bool(self._Attribute.DC_PUMP_IS_AIRLOCK_DETECTED),
+                airlock_detected = attrs.get_bool(self._Attribute.DC_PUMP_AIRLOCK_DETECTED),
             ),
         ]
         
@@ -102,7 +102,7 @@ class AquanotFit508(ZControlBatteryDevice, ZControlPumpDevice, ZControlFloatDevi
         DC_PUMP_CURRENT = "motori"
         DC_PUMP_RUNTIME = "mrt"
         DC_PUMP_IS_RUNNING = "pump"
-        DC_PUMP_IS_AIRLOCK_DETECTED = "airllogic"
+        DC_PUMP_AIRLOCK_DETECTED = "airllogic"
 
         OPERATIONAL_FLOAT_IS_ACTIVE = "of"
         OPERATIONAL_FLOAT_ACTIVATION_COUNT = "ofc"
