@@ -1,6 +1,6 @@
 [project]
 name = "pyzctrl"
-version = "0.2.7"
+version = "0.2.8"
 authors = [
   { name="Bruno Soares", email="soaresbruno@gmail.com" },
 ]

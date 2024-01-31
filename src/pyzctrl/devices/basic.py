@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import ClassVar
 
 import xmltodict
 
@@ -14,6 +15,9 @@ from .connection import ZControlDeviceConnection
 class ZControlDevice:
     """Defines a generic ZControl® device."""
 
+    MANUFACTURER: ClassVar[str | None] = "Zoeller Pump Company"
+    MODEL: ClassVar[str | None] = None
+
     connection: ZControlDeviceConnection
     """The device connection."""
 
@@ -22,12 +26,6 @@ class ZControlDevice:
 
     serial_number: str | None = None
     """The device's serial number."""
-
-    manufacturer: str | None = None
-    """The device's manufacturer."""
-
-    model: str | None = None
-    """The device's model name."""
 
     firmware_version: str | None = None
     """The device's firmware version."""
