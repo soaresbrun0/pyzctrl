@@ -15,13 +15,10 @@ class ZControlFloatDevice(ZControlDevice):
         """Defines a ZControl® device float."""
 
         class Type(StrEnum):
-            """Defines the type of the float."""
+            """Defines the float types."""
 
             OPERATIONAL = "Operational"
             HIGH_WATER = "High Water"
-
-        type: Type | None = None
-        """The float's type."""
 
         is_active: bool | None = None
         """Whether or not the float is active."""
@@ -38,5 +35,5 @@ class ZControlFloatDevice(ZControlDevice):
         never_present: bool | None = None
         """Whether or not the float was never present."""
 
-    floats: [Float] = None
-    """The device's floats."""
+    floats: dict[Float.Type: Float] = None
+    """The device's floats by type."""

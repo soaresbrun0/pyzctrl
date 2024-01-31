@@ -1,6 +1,7 @@
 """Basic support for ZControl® devices equipped with batteries."""
 
 from dataclasses import dataclass
+from enum import StrEnum
 from .basic import ZControlDevice
 
 
@@ -11,6 +12,11 @@ class ZControlBatteryDevice(ZControlDevice):
     @dataclass(init = True)
     class Battery:
         """Defines a battery."""
+
+        class Type(StrEnum):
+            """Defines the battery types."""
+
+            BACKUP = "Backup"
 
         voltage: float | None = None
         """The battery's voltage in volts."""
@@ -30,8 +36,8 @@ class ZControlBatteryDevice(ZControlDevice):
         is_bad: bool | None = None
         """Whether or not the battery is bad."""
 
-    batteries: [Battery] = None
-    """The device's batteries."""
+    batteries: dict[Battery.Type: Battery] = None
+    """The device's batteries by type."""
 
     is_on_battery_power: bool | None = None
     """Whether or not the device is currently being powered by a battery."""

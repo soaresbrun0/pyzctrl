@@ -23,20 +23,18 @@ class AquanotFit508(ZControlBatteryDevice, ZControlPumpDevice, ZControlFloatDevi
         )
         
         # ZControlPumpDevice
-        self.pumps = [
-            self.Pump(
-                type = self.Pump.Type.DC,
+        self.pumps = {
+            self.Pump.Type.DC: self.Pump(
                 current = attrs.get_float(self._Attribute.DC_PUMP_CURRENT, 0.1),
                 runtime = attrs.get_float(self._Attribute.DC_PUMP_RUNTIME, 0.1),
                 is_running = attrs.get_bool(self._Attribute.DC_PUMP_IS_RUNNING),
                 airlock_detected = attrs.get_bool(self._Attribute.DC_PUMP_AIRLOCK_DETECTED),
             ),
-        ]
+        }
         
         # ZControlFloatDevice
-        self.floats = [
-            self.Float(
-                type = self.Float.Type.OPERATIONAL,
+        self.floats = {
+            self.Float.Type.OPERATIONAL: self.Float(
                 is_active = attrs.get_bool(self._Attribute.OPERATIONAL_FLOAT_IS_ACTIVE),
                 activation_count = attrs.get_int(
                     self._Attribute.OPERATIONAL_FLOAT_ACTIVATION_COUNT
@@ -49,8 +47,7 @@ class AquanotFit508(ZControlBatteryDevice, ZControlPumpDevice, ZControlFloatDevi
                 ),
                 never_present = attrs.get_bool(self._Attribute.OPERATIONAL_FLOAT_NEVER_PRESENT),
             ),
-            self.Float(
-                type = self.Float.Type.HIGH_WATER,
+            self.Float.Type.HIGH_WATER: self.Float(
                 is_active = attrs.get_bool(self._Attribute.HIGH_WATER_FLOAT_IS_ACTIVE),
                 activation_count = attrs.get_int(self._Attribute.HIGH_WATER_FLOAT_ACTIVATION_COUNT),
                 is_missing = attrs.get_bool_from_bitmask(
@@ -58,11 +55,11 @@ class AquanotFit508(ZControlBatteryDevice, ZControlPumpDevice, ZControlFloatDevi
                 ),
                 never_present = attrs.get_bool(self._Attribute.HIGH_WATER_FLOAT_NEVER_PRESENT),
             ),
-        ]
+        }
 
         # ZControlBatteryDevice
-        self.batteries = [
-            self.Battery(
+        self.batteries = {
+            self.Battery.Type.BACKUP: self.Battery(
                 voltage = attrs.get_float(self._Attribute.BATTERY_VOLTAGE, 0.01),
                 current = attrs.get_float(self._Attribute.BATTERY_CURRENT, 0.01),
                 is_charging = attrs.get_bool(self._Attribute.BATTERY_IS_CHARGING),
@@ -76,7 +73,7 @@ class AquanotFit508(ZControlBatteryDevice, ZControlPumpDevice, ZControlFloatDevi
                     self._Attribute.ALARMS, self._Alarm.BATTERY_BAD
                 ),
             ),
-        ]
+        }
         self.is_on_battery_power = attrs.get_bool_from_bitmask(
             self._Attribute.ALARMS, self._Alarm.PRIMARY_POWER_MISSING
         )

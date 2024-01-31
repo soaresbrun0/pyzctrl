@@ -34,5 +34,5 @@ class ZControlPumpDevice(ZControlDevice):
         airlock_detected: bool | None = None
         """Whether or not the pump has detected an airlock."""
 
-    pumps: [Pump] = None
-    """The device's pumps."""
+    pumps: dict[Pump.Type: Pump] = None
+    """The device's pumps by type."""
