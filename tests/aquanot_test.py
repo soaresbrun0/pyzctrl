@@ -21,7 +21,7 @@ class AquanotFit508Tests(unittest.TestCase):
         self.assertEqual(device.device_id, "test_device")
         self.assertEqual(device.firmware_version, "1.40")
         self.assertEqual(device.system_uptime, 920172.1)
-        self.assertEqual(device.is_on_battery_power, False)
+        self.assertEqual(device.is_primary_power_missing, False)
         self.assertEqual(device.is_self_test_running, False)
 
         dc_pump = device.pumps[ZControlPumpDevice.Pump.Type.DC]

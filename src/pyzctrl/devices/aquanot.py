@@ -74,7 +74,7 @@ class AquanotFit508(ZControlBatteryDevice, ZControlPumpDevice, ZControlFloatDevi
                 ),
             ),
         }
-        self.is_on_battery_power = attrs.get_bool_from_bitmask(
+        self.is_primary_power_missing = attrs.get_bool_from_bitmask(
             self._Attribute.ALARMS, self._Alarm.PRIMARY_POWER_MISSING
         )
 

@@ -39,5 +39,5 @@ class ZControlBatteryDevice(ZControlDevice):
     batteries: dict[Battery.Type: Battery] = None
     """The device's batteries by type."""
 
-    is_on_battery_power: bool | None = None
-    """Whether or not the device is currently being powered by a battery."""
+    is_primary_power_missing: bool | None = None
+    """Whether or not the device's primary power source is missing."""
