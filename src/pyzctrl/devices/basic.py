@@ -18,7 +18,16 @@ class ZControlDevice:
     """The device connection."""
 
     device_id: str | None = None
-    """The device's unique identifier (i.e. serial number)."""
+    """The device's unique identifier (e.g. serial number)."""
+
+    serial_number: str | None = None
+    """The device's serial number."""
+
+    manufacturer: str | None = None
+    """The device's manufacturer."""
+
+    model: str | None = None
+    """The device's model name."""
 
     firmware_version: str | None = None
     """The device's firmware version."""

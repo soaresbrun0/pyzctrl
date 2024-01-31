@@ -9,6 +9,10 @@ from .pump import ZControlPumpDevice
 from ..utils import AttributeMap
 
 
+MANUFACTURER = "Zoeller Pump Company"
+MODEL = "Aquanot® Fit 508"
+
+
 @dataclass
 class AquanotFit508(ZControlBatteryDevice, ZControlFloatDevice, ZControlPumpDevice):
     """Support for fetching the status of Aquanot® Fit 508 devices."""
@@ -16,6 +20,9 @@ class AquanotFit508(ZControlBatteryDevice, ZControlFloatDevice, ZControlPumpDevi
     def _process_attrs(self, attrs: AttributeMap) -> None:
         # ZControlDevice
         self.device_id = attrs.get(self._Attribute.DEVICE_ID)
+        self.serial_number = self.device_id
+        self.manufacturer = MANUFACTURER
+        self.model = MODEL
         self.firmware_version = attrs.get(self._Attribute.FIRMWARE_VERSION)
         self.system_uptime = attrs.get_float(self._Attribute.SYSTEM_UPTIME, 0.1)
         self.is_self_test_running = attrs.get_bool_from_bitmask(
