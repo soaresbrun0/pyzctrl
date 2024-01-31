@@ -1,6 +1,6 @@
 [project]
 name = "pyzctrl"
-version = "0.1.4"
+version = "0.2.0"
 authors = [
   { name="Bruno Soares", email="soaresbruno@gmail.com" },
 ]
@@ -29,5 +29,3 @@ Issues = "https://github.com/soaresbrun0/pyzctrl/issues"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[tool]
