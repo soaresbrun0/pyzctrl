@@ -19,9 +19,6 @@ class ZControlPumpDevice(ZControlDevice):
         
             DC = "DC"
 
-        type: Type | None = None
-        """The pump's type."""
-
         current: float | None = None
         """The pump's current in amps."""
 

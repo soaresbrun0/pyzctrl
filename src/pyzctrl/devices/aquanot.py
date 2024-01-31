@@ -10,7 +10,7 @@ from ..utils import AttributeMap
 
 
 @dataclass
-class AquanotFit508(ZControlBatteryDevice, ZControlPumpDevice, ZControlFloatDevice):
+class AquanotFit508(ZControlBatteryDevice, ZControlFloatDevice, ZControlPumpDevice):
     """Support for fetching the status of Aquanot® Fit 508 devices."""
 
     def _process_attrs(self, attrs: AttributeMap) -> None:
@@ -21,16 +21,27 @@ class AquanotFit508(ZControlBatteryDevice, ZControlPumpDevice, ZControlFloatDevi
         self.is_self_test_running = attrs.get_bool_from_bitmask(
             self._Attribute.ACTION, self._Action.SELF_TEST_RUNNING
         )
-        
-        # ZControlPumpDevice
-        self.pumps = {
-            self.Pump.Type.DC: self.Pump(
-                current = attrs.get_float(self._Attribute.DC_PUMP_CURRENT, 0.1),
-                runtime = attrs.get_float(self._Attribute.DC_PUMP_RUNTIME, 0.1),
-                is_running = attrs.get_bool(self._Attribute.DC_PUMP_IS_RUNNING),
-                airlock_detected = attrs.get_bool(self._Attribute.DC_PUMP_AIRLOCK_DETECTED),
+
+        # ZControlBatteryDevice
+        self.batteries = {
+            self.Battery.Type.BACKUP: self.Battery(
+                voltage = attrs.get_float(self._Attribute.BATTERY_VOLTAGE, 0.01),
+                current = attrs.get_float(self._Attribute.BATTERY_CURRENT, 0.01),
+                is_charging = attrs.get_bool(self._Attribute.BATTERY_IS_CHARGING),
+                is_low = attrs.get_bool_from_bitmask(
+                    self._Attribute.ALARMS, self._Alarm.LOW_BATTERY_VOLTAGE
+                ),
+                is_missing = attrs.get_bool_from_bitmask(
+                    self._Attribute.ALARMS, self._Alarm.BATTERY_MISSING
+                ),
+                is_bad = attrs.get_bool_from_bitmask(
+                    self._Attribute.ALARMS, self._Alarm.BATTERY_BAD
+                ),
             ),
         }
+        self.is_primary_power_missing = attrs.get_bool_from_bitmask(
+            self._Attribute.ALARMS, self._Alarm.PRIMARY_POWER_MISSING
+        )
         
         # ZControlFloatDevice
         self.floats = {
@@ -57,26 +68,15 @@ class AquanotFit508(ZControlBatteryDevice, ZControlPumpDevice, ZControlFloatDevi
             ),
         }
 
-        # ZControlBatteryDevice
-        self.batteries = {
-            self.Battery.Type.BACKUP: self.Battery(
-                voltage = attrs.get_float(self._Attribute.BATTERY_VOLTAGE, 0.01),
-                current = attrs.get_float(self._Attribute.BATTERY_CURRENT, 0.01),
-                is_charging = attrs.get_bool(self._Attribute.BATTERY_IS_CHARGING),
-                is_low = attrs.get_bool_from_bitmask(
-                    self._Attribute.ALARMS, self._Alarm.LOW_BATTERY_VOLTAGE
-                ),
-                is_missing = attrs.get_bool_from_bitmask(
-                    self._Attribute.ALARMS, self._Alarm.BATTERY_MISSING
-                ),
-                is_bad = attrs.get_bool_from_bitmask(
-                    self._Attribute.ALARMS, self._Alarm.BATTERY_BAD
-                ),
+        # ZControlPumpDevice
+        self.pumps = {
+            self.Pump.Type.DC: self.Pump(
+                current = attrs.get_float(self._Attribute.DC_PUMP_CURRENT, 0.1),
+                runtime = attrs.get_float(self._Attribute.DC_PUMP_RUNTIME, 0.1),
+                is_running = attrs.get_bool(self._Attribute.DC_PUMP_IS_RUNNING),
+                airlock_detected = attrs.get_bool(self._Attribute.DC_PUMP_AIRLOCK_DETECTED),
             ),
         }
-        self.is_primary_power_missing = attrs.get_bool_from_bitmask(
-            self._Attribute.ALARMS, self._Alarm.PRIMARY_POWER_MISSING
-        )
 
     def perform_self_test(self) -> None:
         """Performs self test."""

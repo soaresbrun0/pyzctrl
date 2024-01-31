@@ -21,15 +21,21 @@ class AquanotFit508Tests(unittest.TestCase):
         self.assertEqual(device.device_id, "test_device")
         self.assertEqual(device.firmware_version, "1.40")
         self.assertEqual(device.system_uptime, 920172.1)
-        self.assertEqual(device.is_primary_power_missing, False)
         self.assertEqual(device.is_self_test_running, False)
 
-        dc_pump = device.pumps[ZControlPumpDevice.Pump.Type.DC]
-        self.assertEqual(dc_pump.current, 0)
-        self.assertEqual(dc_pump.is_running, False)
-        self.assertEqual(dc_pump.runtime, 78.8)
-        self.assertEqual(dc_pump.airlock_detected, False)
+        # ZControlBatteryDevice
+        self.assertEqual(device.is_primary_power_missing, False)
+        backup_battery = device.batteries[
+            ZControlBatteryDevice.Battery.Type.BACKUP
+        ]
+        self.assertEqual(backup_battery.voltage, 12.85)
+        self.assertEqual(backup_battery.current, 0)
+        self.assertEqual(backup_battery.is_charging, False)
+        self.assertEqual(backup_battery.is_low, False)
+        self.assertEqual(backup_battery.is_missing, False)
+        self.assertEqual(backup_battery.is_bad, False)
 
+        # ZControlFloatDevice
         operational_float: ZControlFloatDevice.Float = device.floats[
             ZControlFloatDevice.Float.Type.OPERATIONAL
         ]
@@ -48,15 +54,12 @@ class AquanotFit508Tests(unittest.TestCase):
         self.assertEqual(high_water_float.is_missing, False)
         self.assertEqual(high_water_float.never_present, False)
 
-        backup_battery = device.batteries[
-            ZControlBatteryDevice.Battery.Type.BACKUP
-        ]
-        self.assertEqual(backup_battery.voltage, 12.85)
-        self.assertEqual(backup_battery.current, 0)
-        self.assertEqual(backup_battery.is_charging, False)
-        self.assertEqual(backup_battery.is_low, False)
-        self.assertEqual(backup_battery.is_missing, False)
-        self.assertEqual(backup_battery.is_bad, False)
+        # ZControlPumpDevice
+        dc_pump = device.pumps[ZControlPumpDevice.Pump.Type.DC]
+        self.assertEqual(dc_pump.current, 0)
+        self.assertEqual(dc_pump.is_running, False)
+        self.assertEqual(dc_pump.runtime, 78.8)
+        self.assertEqual(dc_pump.airlock_detected, False)
 
 
 if __name__ == "__main__":
