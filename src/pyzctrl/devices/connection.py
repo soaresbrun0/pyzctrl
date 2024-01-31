@@ -3,7 +3,6 @@
 import logging
 import urllib
 from abc import abstractmethod
-from datetime import timedelta
 from typing import Protocol
 
 import requests
@@ -42,13 +41,13 @@ class ZControlDeviceHTTPConnection(ZControlDeviceConnection):
     base_url: str
     """The base URL for connecting to the device."""
 
-    timeout: timedelta
-    """The timeout to use when connecting to the device."""
+    timeout: int
+    """The timeout in seconds to use when connecting to the device."""
 
-    DEFAULT_TIMEOUT = timedelta(seconds = 10)
-    """The default timeout to use when connecting to the device."""
+    DEFAULT_TIMEOUT = 10
+    """The default timeout in seconds to use when connecting to the device."""
 
-    def __init__(self, base_url: str, timeout: timedelta = DEFAULT_TIMEOUT) -> None:
+    def __init__(self, base_url: str, timeout: int = DEFAULT_TIMEOUT) -> None:
         self.base_url = base_url
         self.timeout = timeout
 
