@@ -1,7 +1,7 @@
 """Support for Aquanot® devices."""
 
 from dataclasses import dataclass
-from enum import IntEnum, IntFlag, StrEnum
+from enum import Enum, IntEnum, IntFlag
 
 from .battery import ZControlBatteryDevice
 from .float import ZControlFloatDevice
@@ -93,7 +93,7 @@ class AquanotFit508(ZControlBatteryDevice, ZControlFloatDevice, ZControlPumpDevi
         """Acknowledges all faults and resets the device."""
         self.connection.fetch_resource("ackfaults.cgi")
 
-    class _Attribute(StrEnum):
+    class _Attribute(str, Enum):
 
         DEVICE_ID = "deviceid"
         FIRMWARE_VERSION = "firm"

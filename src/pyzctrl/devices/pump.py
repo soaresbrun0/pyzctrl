@@ -1,7 +1,8 @@
 """Basic support for ZControl® devices equipped with pumps."""
 
 from dataclasses import dataclass
-from enum import StrEnum
+from enum import Enum
+from typing import Optional
 
 from .basic import ZControlDevice
 
@@ -14,21 +15,21 @@ class ZControlPumpDevice(ZControlDevice):
     class Pump:
         """Defines a ZControl® device pump."""
 
-        class Type(StrEnum):
+        class Type(str, Enum):
             """Defines pump types."""
         
             DC = "DC"
 
-        current: float | None = None
+        current: Optional[float] = None
         """The pump's current in amps."""
 
-        is_running: bool | None = None
+        is_running: Optional[bool] = None
         """Whether or not the pump is running."""
 
-        runtime: float | None = None
+        runtime: Optional[float] = None
         """The pump's total runtime, in seconds."""
 
-        airlock_detected: bool | None = None
+        airlock_detected: Optional[bool] = None
         """Whether or not the pump has detected an airlock."""
 
     pumps: dict[Pump.Type: Pump] = None

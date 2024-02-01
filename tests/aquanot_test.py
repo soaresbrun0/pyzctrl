@@ -24,7 +24,7 @@ class AquanotFit508Tests(unittest.TestCase):
         self.assertEqual(device.is_self_test_running, False)
 
         # ZControlBatteryDevice
-        self.assertEqual(device.is_primary_power_missing, False)
+        self.assertEqual(device.is_primary_power_missing, True)
         backup_battery = device.batteries[
             ZControlBatteryDevice.Battery.Type.BACKUP
         ]

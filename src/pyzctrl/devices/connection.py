@@ -3,7 +3,7 @@
 import logging
 import urllib
 from abc import abstractmethod
-from typing import Protocol
+from typing import Optional, Protocol
 
 import requests
 from requests.exceptions import RequestException, Timeout
@@ -22,7 +22,7 @@ class ZControlDeviceConnection(Protocol):
     class ConnectionError(Exception):
         """Raised when unable to connect to a device."""
 
-        def __init__(self, url: str, reason: str | None = None) -> None:
+        def __init__(self, url: str, reason: Optional[str] = None) -> None:
             message = f"Failed to connect to {url}"
             if reason is not None:
                 message += f"; {message}"

@@ -1,7 +1,8 @@
 """Basic support for ZControl® devices equipped with floats."""
 
 from dataclasses import dataclass
-from enum import StrEnum
+from enum import Enum
+from typing import Optional
 
 from .basic import ZControlDevice
 
@@ -14,25 +15,25 @@ class ZControlFloatDevice(ZControlDevice):
     class Float:
         """Defines a ZControl® device float."""
 
-        class Type(StrEnum):
+        class Type(str, Enum):
             """Defines the float types."""
 
             OPERATIONAL = "Operational"
             HIGH_WATER = "High Water"
 
-        is_active: bool | None = None
+        is_active: Optional[bool] = None
         """Whether or not the float is active."""
 
-        activation_count: int | None = None
+        activation_count: Optional[int] = None
         """The float's total activation count."""
 
-        is_malfunctioning: bool | None = None
+        is_malfunctioning: Optional[bool] = None
         """Whether or not the float is malfunctioning."""
 
-        is_missing: bool | None = None
+        is_missing: Optional[bool] = None
         """Whether or not the float is missing."""
 
-        never_present: bool | None = None
+        never_present: Optional[bool] = None
         """Whether or not the float was never present."""
 
     floats: dict[Float.Type: Float] = None

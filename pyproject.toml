@@ -1,6 +1,6 @@
 [project]
 name = "pyzctrl"
-version = "0.2.8"
+version = "0.3.0"
 authors = [
   { name="Bruno Soares", email="soaresbruno@gmail.com" },
 ]
@@ -11,7 +11,7 @@ keywords = [
 ]
 readme = "README.md"
 license = {file = "LICENSE"}
-requires-python = ">=3.12"
+requires-python = ">=3.9.2"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

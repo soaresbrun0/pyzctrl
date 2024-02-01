@@ -40,7 +40,7 @@
 	<RC>1</RC>
 	<firm>1.40</firm>
 	<status>0</status>
-	<alarms>0</alarms>
+	<alarms>1</alarms>
 	<buzzermask>0</buzzermask>
 	<latched>0</latched>
 	<action>128</action>

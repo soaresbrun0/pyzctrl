@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import ClassVar
+from typing import ClassVar, Optional
 
 import xmltodict
 
@@ -15,25 +15,25 @@ from .connection import ZControlDeviceConnection
 class ZControlDevice:
     """Defines a generic ZControl® device."""
 
-    MANUFACTURER: ClassVar[str | None] = "Zoeller Pump Company"
-    MODEL: ClassVar[str | None] = None
+    MANUFACTURER: ClassVar[Optional[str]] = "Zoeller Pump Company"
+    MODEL: ClassVar[Optional[str]] = None
 
     connection: ZControlDeviceConnection
     """The device connection."""
 
-    device_id: str | None = None
+    device_id: Optional[str] = None
     """The device's unique identifier (e.g. serial number)."""
 
-    serial_number: str | None = None
+    serial_number: Optional[str] = None
     """The device's serial number."""
 
-    firmware_version: str | None = None
+    firmware_version: Optional[str] = None
     """The device's firmware version."""
 
-    system_uptime: float | None = None
+    system_uptime: Optional[float] = None
     """The time in seconds since the device was booted."""
 
-    is_self_test_running: bool | None = None
+    is_self_test_running: Optional[bool] = None
     """Whether or not the device is currently performing a self-test."""
 
     def __init__(self, connection: ZControlDeviceConnection) -> None:
